@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EvansCode - Innovative Solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+       /* Google Colors */
+:root {
+    --google-blue: #4285F4;
+    --google-red: #EA4335;
+    --google-yellow: #FBBC05;
+    --google-green: #34A853;
+    --google-gray: #F1F3F4;
+    --primary-color: #4a90e2; /* Example primary color */
+    --secondary-color: #e2e2e2; /* Example secondary color */
+}
+
+/* Newsletter Section Styles */
+#newsletter {
+    background: var(--secondary-color);
+    padding: 40px 20px;
+    text-align: center;
+    border-radius: 8px;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#newsletter h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+#newsletter p {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.125rem;
+}
+
+#newsletter form {
+    display: flex;
+    flex-direction: column; /* Changed to column layout for better form alignment */
+    align-items: center;
+    gap: 10px;
+}
+
+#newsletter input[type="text"], /* Name input field */
+#newsletter input[type="email"] {
+    padding: 12px;
+    border: 1px solid #573737;
+    border-radius: 6px;
+    width: 250px;
+    max-width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+}
+
+#newsletter input[type="text"] {
+    /* Specific styles for the name input field */
+    margin-bottom: 10px;
+}
+
+#newsletter button[type="submit"] {
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#newsletter button[type="submit"]:hover {
+    background: linear-gradient(135deg, #4a90e2, #357ABD);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+}
+
+/* Google Sign-In Button Styles */
+.btn.google-btn {
+    background-color: var(--google-blue);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 16px;
+    margin: 20px auto;
+    display: block;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn.google-btn:hover {
+    background-color: #357ABD;
+    transform: scale(1.05);
+}
+
+/* Google Sign-In Modal Styles */
+#google-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#google-modal .modal-content {
+    background: var(--google-gray);
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+#google-modal .modal-content h2 {
+    color: var(--google-blue);
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+#google-modal .modal-content p {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.125rem;
+}
+
+#google-modal .g_id_signin {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+#google-modal .modal-button {
+    background-color: var(--google-blue);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 6px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#google-modal .modal-button:hover {
+    background-color: #357ABD;
+    transform: scale(1.05);
+}
+
+#google-modal .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Alert Styles */
+.alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    z-index: 1000;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards, slideIn 0.5s forwards;
+}
+
+.alert.success {
+    background-color: #4caf50; /* Green */
+}
+
+.alert.error {
+    background-color: #f44336; /* Red */
+}
+
+.alert.info {
+    background-color: #2196f3; /* Blue */
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(50px); }
+    to { transform: translateX(0); }
+}
+
+.alert.shake {
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-10px); }
+    100% { transform: translateX(0); }
+}
+
+.alert.bounce {
+    animation: bounce 0.5s;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-30px); }
+    60% { transform: translateY(-15px); }
+}
+
+  </style>
+</head>
+<body>
+    <nav>
+        <div class="logo-container">
+            <img src="Evanslogo.png" alt="EvansCode Logo">
+        </div>
+        <h1>EvansCode</h1>
+        <div class="menu-toggle" id="menu-toggle">
+            ☰
+        </div>
+        <div class="nav-links" id="nav-links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#blog">Blog</a>
+            <a href="posts.php">Posts</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <div id="home" class="hero">
+        <div class="hero-content">
+            <h1>Welcome to EvansCode!</h1>
+            <p>Bringing your tech dreams to life with creativity and expertise.</p>
+            <a href="#contact" class="cta-button">Let's Talk</a>
+        </div>
+    </div>
+
+    <div class="feature-highlight">
+        <h2>Why EvansCode Stands Out</h2>
+        <div class="features">
+            <div class="feature">
+                <img src="feature1.jpg" alt="Feature 1">
+                <h3>Creative Solutions</h3>
+                <p>We craft unique tech solutions that set you apart from the competition.</p>
+            </div>
+            <div class="feature">
+                <img src="features2.jpeg" alt="Feature 2">
+                <h3>Personalized Approach</h3>
+                <p>We listen, understand, and create solutions tailored to your needs.</p>
+            </div>
+            <div class="feature">
+                <img src="feature3.jpg" alt="Feature 3">
+                <h3>Expert Guidance</h3>
+                <p>Leverage our expertise to navigate complex tech challenges with ease.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <section id="about" class="section">
+            <h2>About Evans</h2>
+            <p>Hi there! I'm Evans, a tech enthusiast with a knack for turning ideas into reality. Whether you're looking for a sleek website, a powerful app, or just some tech advice, I'm here to help. My passion is to make technology work for you in the most creative and effective way.</p>
+            <img src="about1.jpg" alt="Evans" class="profile-image">
+        </section>
+
+        <section id="services" class="section services">
+            <h2>What I Offer</h2>
+            <div class="service">
+                <h3>Web Development</h3>
+                <p>From stunning designs to smooth functionality, I'll build a website that reflects your brand.</p>
+            </div>
+            <div class="service">
+                <h3>App Development</h3>
+                <p>Get a user-friendly app that's functional and engaging, tailored to your audience.</p>
+            </div>
+            <div class="service">
+                <h3>Tech Consulting</h3>
+                <p>Need advice on a tech project? Let's work together to find the best solutions.</p>
+            </div>
+            <div class="service">
+                <h3>Custom Solutions</h3>
+                <p>Have a unique challenge? I specialize in creating custom software to meet your specific needs.</p>
+            </div>
+        </section>
+        
+
+        <section id="portfolio" class="section portfolio">
+            <h2>My Work</h2>
+            <p>Check out some of my favorite projects:</p>
+            <div class="portfolio-item">
+                <img src="portfolio2.png" alt="Project 1">
+                <h4>Project One</h4>
+                <p>A creative solution that helped a client reach their target audience with a stunning website.</p>
+            </div>
+            <div class="portfolio-item">
+                <img src="portfolio.png" alt="Project 2">
+                <h4>Project Two</h4>
+                <p>An innovative app designed to simplify user interactions and boost engagement.</p>
+            </div>
+            <div class="portfolio-item">
+                <img src="portfolio1.png" alt="Project 3">
+                <h4>Project Three</h4>
+                <p>Custom software built to address a unique business challenge, resulting in greater efficiency.</p>
+            </div>
+        </section>
+        
+
+        <section id="testimonials" class="section testimonials">
+            <h2>What My Clients Say</h2>
+            <p>Here's what some of my happy clients have to say:</p>
+            <div class="testimonial">
+                <p>"Working with Evans was a fantastic experience. His creativity and expertise really made a difference!" - Client A</p>
+            </div>
+            <div class="testimonial">
+                <p>"Evans delivered exactly what we needed. The project was completed on time and exceeded our expectations." - Client B</p>
+            </div>
+            <div class="testimonial">
+                <p>"If you're looking for someone who truly understands your tech needs, Evans is the person to go to." - Client C</p>
+            </div>
+        </section>
+
+        <section id="blog" class="section blog">
+            <h2>From My Blog</h2>
+            <p>Read my latest posts on technology, development, and more:</p>
+            <div class="blog-post">
+                <h3><a href="#">Boost Your Coding Skills: Tips & Tricks</a></h3>
+                <p>Discover effective methods to enhance your programming skills and grow as a developer.</p>
+            </div>
+            <div class="blog-post">
+                <h3><a href="#">Top Web Trends to Watch in 2024</a></h3>
+                <p>Stay ahead of the curve with insights into the latest trends in web development.</p>
+            </div>
+            <div class="blog-post">
+                <h3><a href="#">My Path in Tech: Lessons Learned</a></h3>
+                <p>A personal reflection on my journey through the tech world and key lessons learned along the way.</p>
+            </div>
+        </section>
+
+        <section id="contact" class="section contact">
+            <h2>Get in Touch</h2>
+            <p>Have a question or want to start a project? Reach out to me, and let's discuss how we can work together!</p>
+            <div class="contact-form">
+                <form action="#" method="post">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+        <section id="newsletter" class="section newsletter">
+            <h2>Stay Updated</h2>
+            <p>Subscribe to my newsletter to get the latest updates, tips, and insights delivered right to your inbox.</p>
+            
+            <!-- Display number of followers creatively -->
+            <div id="follower-count" class="follower-count">
+                <p>Join <strong><span id="follower-number">0</span> EvansCode Fans</strong> already learning and growing with us!</p>
+            </div>
+        
+            <form id="newsletter-form" action="subscribe.php" method="post">
+                <input type="text" name="newsletter-name" placeholder="Your Name" required>
+                <input type="email" name="newsletter-email" placeholder="Your Email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+            <button class="btn google-btn" onclick="openModal()">Subscribe with Google</button>
+        </section>
+        
+    
+        <!-- Google Sign-In Modal -->
+        <div id="google-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Subscribe to Our Newsletter</h2>
+                <p>Sign in with Google to subscribe to our newsletter:</p>
+                <div class="g_id_signin"></div>
+                <button class="modal-button" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+        <div id="alert-container" style="display: none; position: fixed; top: 10px; right: 10px; z-index: 1000;"></div>
+
+        <section id="skills" class="section skills">
+            <h2>Skills & Expertise</h2>
+            <p>Here are some areas where I excel:</p>
+            <ul>
+                <li>JavaScript & TypeScript</li>
+                <li>Python & Django</li>
+                <li>HTML & CSS</li>
+                <li>React & Angular</li>
+                <li>Android Development</li>
+                <li>PHP</li>
+            </ul>
+        </section>
+        
+        
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 EvansCode. All rights reserved.</p>
+        <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+        <div>
+            <a href="#" title="Facebook">Facebook</a>
+            <a href="#" title="Twitter">Twitter</a>
+            <a href="#" title="LinkedIn">LinkedIn</a>
+            <a href="#" title="GitHub">GitHub</a>
+        </div>
+    </div>
+
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fetch and display the follower count when the page loads
+            fetch('getFollowerCount.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        document.getElementById('follower-number').textContent = data.count.toLocaleString();
+                    } else {
+                        console.error('Error fetching follower count:', data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    
+        document.getElementById('newsletter-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const nameInput = document.querySelector('#newsletter-form input[name="newsletter-name"]');
+            const emailInput = document.querySelector('#newsletter-form input[name="newsletter-email"]');
+            const name = nameInput.value;
+            const email = emailInput.value;
+    
+            // Email validation regex
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                // Show an error message if the email is invalid
+                const alertBox = document.getElementById('alert-container');
+                const alertMessage = document.createElement('div');
+                alertMessage.className = 'alert error';
+                alertMessage.textContent = 'Please enter a valid email address.';
+                alertBox.appendChild(alertMessage);
+                alertBox.style.display = 'block';
+                setTimeout(() => {
+                    alertBox.removeChild(alertMessage);
+                    if (alertBox.children.length === 0) {
+                        alertBox.style.display = 'none';
+                    }
+                }, 5000);
+                return;
+            }
+    
+            fetch('subscribe.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                    'newsletter-email': email,
+                    'newsletter-name': name
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const alertBox = document.getElementById('alert-container');
+                const alertMessage = document.createElement('div');
+                alertMessage.className = `alert ${data.status}`;
+                alertMessage.textContent = data.message;
+                alertBox.appendChild(alertMessage);
+                alertBox.style.display = 'block';
+                setTimeout(() => {
+                    alertBox.removeChild(alertMessage);
+                    if (alertBox.children.length === 0) {
+                        alertBox.style.display = 'none';
+                    }
+                }, 5000);
+    
+                // Clear the input fields after submission
+                nameInput.value = '';
+                emailInput.value = '';
+    
+                // Update the follower count
+                if (data.status === 'success') {
+                    fetch('getFollowerCount.php')
+                        .then(response => response.json())
+                        .then(countData => {
+                            if (countData.status === 'success') {
+                                document.getElementById('follower-number').textContent = countData.count.toLocaleString();
+                            } else {
+                                console.error('Error updating follower count:', countData.message);
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    
+        function closeAlert() {
+            document.getElementById('alert-container').style.display = 'none';
+        }
+    
+        function openModal() {
+            document.getElementById('google-modal').style.display = 'flex';
+        }
+    
+        function closeModal() {
+            document.getElementById('google-modal').style.display = 'none';
+        }
+    
+        function handleCredentialResponse(response) {
+            console.log('Google Sign-In response:', response);
+            const profile = response.credential ? JSON.parse(atob(response.credential.split('.')[1])) : null;
+            const email = profile ? profile.email : null;
+            const name = profile ? profile.name : null;
+    
+            if (email && name) {
+                fetch('subscribe.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({ 
+                        'newsletter-email': email, 
+                        'newsletter-name': name 
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const alertBox = document.getElementById('alert-container');
+                    const alertMessage = document.createElement('div');
+                    alertMessage.className = `alert ${data.status}`;
+                    alertMessage.textContent = data.message;
+                    alertBox.appendChild(alertMessage);
+                    alertBox.style.display = 'block';
+                    setTimeout(() => {
+                        alertBox.removeChild(alertMessage);
+                        if (alertBox.children.length === 0) {
+                            alertBox.style.display = 'none';
+                        }
+                    }, 5000);
+    
+                    // Close the modal after successful sign-in
+                    closeModal();
+    
+                    // Update the follower count
+                    if (data.status === 'success') {
+                        fetch('getFollowerCount.php')
+                            .then(response => response.json())
+                            .then(countData => {
+                                if (countData.status === 'success') {
+                                    document.getElementById('follower-number').textContent = countData.count.toLocaleString();
+                                } else {
+                                    console.error('Error updating follower count:', countData.message);
+                                }
+                            })
+                            .catch(error => console.error('Error:', error));
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        }
+    
+        function initGoogleSignIn() {
+            window.google.accounts.id.initialize({
+                client_id: '133317207361-du5ga9l36gqnsk8hmgja9vhus9m61tq7.apps.googleusercontent.com', // Replace with your actual client ID
+                callback: handleCredentialResponse
+            });
+            window.google.accounts.id.renderButton(
+                document.querySelector('#google-modal .g_id_signin'),
+                { theme: 'outline', size: 'large' }
+            );
+        }
+    
+        window.onload = initGoogleSignIn;
+    </script>
+    
+    
+    
+    <script src="script.js"></script>
+</body>
+</html>
